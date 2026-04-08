@@ -1,7 +1,7 @@
 export function RowContainerWidth() {
   return (
     <div>
-      display: flex is the same as display: block flow so the width of auto for
+      display: flex is the same as display: block flex so the width of auto for
       display:flex will be the same as a div and take up the whole width
       <div style={{ display: "flex", border: "1px solid black" }}>
         display: flex
@@ -14,6 +14,83 @@ export function RowContainerWidth() {
     </div>
   );
 }
+
+const FlexItemFormulas = () => (
+  <>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`flexItemNInitialWidth = max(
+  isPercentage(flexItemNBasis) ? 
+    flexItemNBasis * containerWidth : 
+    flexItemNBasis, 
+  flexItemNOverflow === 'hidden' || flexItemNOverflow === 'auto' || flexItemNOverflow === 'scroll' ?
+    0 : 
+    flexItemNContentWidth
+)`}
+    </div>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`totalInitialFlexItemWidth = flexItem1InitialWidth + flexItem2InitialWidth + ...`}
+    </div>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`remainingSpace = containerWidth - totalInitialFlexItemWidth`}
+    </div>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`totalFlexGrow = flexItem1Grow + flexItem2Grow + ...`}
+    </div>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`totalFlexShrink = flexItem1Shrink + flexItem2Shrink + ...`}
+    </div>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`flexItemNAdjustment = remainingSpace > 0 ? 
+  remainingSpace * (flexItemNGrow / totalFlexGrow) : 
+  remainingSpace * (flexItemNShrink / totalFlexShrink)`}
+    </div>
+    <div
+      style={{
+        marginTop: "5px",
+        fontFamily: "monospace",
+        whiteSpace: "pre",
+      }}
+    >
+      {`flexItemNCalculatedWidth = max(flexItemNInitialWidth + flexItemNAdjustment, 0)`}
+    </div>
+  </>
+);
 
 export function RowItemWidth() {
   return (
@@ -159,78 +236,7 @@ export function RowItemWidth() {
         </div>
         <div style={{ marginTop: "10px" }}>
           Combining all these properties is dictated by the following formulas:
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`flexItemNInitialWidth = max(
-  isPercentage(flexItemNBasis) ? 
-    flexItemNBasis * containerWidth : 
-    flexItemNBasis, 
-  flexItemNOverflow === 'hidden' ?
-    flexItemNContentWidth : 
-    0
-)`}
-          </div>
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`totalInitialFlexItemWidth = flexItem1InitialWidth + flexItem2InitialWidth + ...`}
-          </div>
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`remainingSpace = containerWidth - totalInitialFlexItemWidth`}
-          </div>
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`totalFlexGrow = flexItem1Grow + flexItem2Grow + ...`}
-          </div>
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`totalFlexShrink = flexItem1Shrink + flexItem2Shrink + ...`}
-          </div>
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`flexItemNAdjustment = remainingSpace > 0 ? 
-  remainingSpace * (flexItemNGrow / totalFlexGrow) : 
-  remainingSpace * (flexItemNShrink / totalFlexShrink)`}
-          </div>
-          <div
-            style={{
-              marginTop: "5px",
-              fontFamily: "monospace",
-              whiteSpace: "pre",
-            }}
-          >
-            {`flexItemNCalculatedWidth = max(flexItemNInitialWidth + flexItemNAdjustment, 0)`}
-          </div>
+          <FlexItemFormulas />
         </div>
       </div>
     </div>
@@ -342,7 +348,7 @@ export function ColumnContainerAndItemHeight() {
       </div>
       <div style={{ marginTop: "10px" }}>
         Flex-grow has no effect unless an explicit height is given. Flex-shrink
-        is the same
+        is the same.
         <div
           style={{
             border: "1px solid black",
@@ -796,6 +802,157 @@ export function FlexboxWithOnlyText() {
       >
         This is unwrapped <span>This is wrapped in a span</span> This is
         unwrapped
+      </div>
+    </div>
+  );
+}
+
+export function OverflowAndFlexGrow() {
+  return (
+    <div>
+      overflow generally works the same with flexbox as it does in BFCs. There
+      is an additional nuance though--a flexGrow item with overflow: hidden,
+      scroll, or auto will only expand to width/height of its container, whereas
+      a flexGrow item with overflow: visible will have the same height as its
+      content. Basically overflow affects the behavior of flexGrow, with
+      overflow: hidden (and similar) making it behave like the more typical
+      item. See the formulas for precise semantics.
+      <div
+        style={{
+          height: "200px",
+          border: "1px solid blue",
+          overflow: "visible",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        height: 200px, overflow: visible
+        <div
+          style={{
+            flexGrow: 1,
+            border: "1px solid red",
+            overflow: "visible",
+          }}
+        >
+          flex-grow: 1, overflow: visible
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          height: "200px",
+          marginTop: "200px",
+          border: "1px solid blue",
+          display: "flex",
+          flexDirection: "column",
+          overflow: "visible",
+        }}
+      >
+        height: 200px, overflow: visible
+        <div
+          style={{
+            flexGrow: 1,
+            border: "1px solid red",
+            overflow: "auto",
+          }}
+        >
+          flex-grow: 1, overflow: auto
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          height: "200px",
+          marginTop: "20px",
+          border: "1px solid blue",
+          overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        height: 200px, overflow: auto
+        <div
+          style={{
+            flexGrow: 1,
+            border: "1px solid red",
+          }}
+        >
+          flex-grow: 1
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+          <div
+            style={{
+              height: "100px",
+              border: "1px solid green",
+            }}
+          >
+            height: 100px
+          </div>
+        </div>
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <h3>Formulas</h3>
+        <FlexItemFormulas />
       </div>
     </div>
   );

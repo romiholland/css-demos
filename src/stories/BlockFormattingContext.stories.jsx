@@ -640,6 +640,144 @@ But preserves spaces and new lines
   );
 }
 
+export function Overflow() {
+  return (
+    <div>
+      overflow: visible is the default value. That content will overflow the
+      container
+      <div style={{ height: "200px", border: "1px solid blue" }}>
+        height: 200px, overflow: visible (implicit)
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+      </div>
+      <div
+        style={{
+          height: "200px",
+          marginTop: "150px",
+          border: "1px solid blue",
+          overflow: "hidden",
+        }}
+      >
+        margin-top: 150px, height: 200px, overflow: hidden
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+      </div>
+      <div
+        style={{
+          height: "200px",
+          marginTop: "10px",
+          border: "1px solid blue",
+          overflow: "auto",
+        }}
+      >
+        margin-top: 10px, height: 200px, overflow: auto
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+      </div>
+      <div
+        style={{
+          height: "200px",
+          marginTop: "10px",
+          border: "1px solid blue",
+          overflow: "scroll",
+        }}
+      >
+        margin-top: 10px, height: 200px, overflow: scroll
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+        <div
+          style={{
+            height: "100px",
+            border: "1px solid green",
+          }}
+        >
+          height: 100px
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default {
   title: "BlockFormattingContext",
   parameters: {
